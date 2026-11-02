@@ -87,59 +87,73 @@ export default function AdminOrders() {
       <h2>{t("Manage Orders")}</h2>
 
       {loading ? (
-        <p>{t("Loading...")}</p>
+        <p className="admin-orders-message">{t("Loading...")}</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>{t("Order Number")}</th>
-              <th>{t("Customer")}</th>
-              <th>{t("Address")}</th>
-              <th>{t("Total")}</th>
-              <th>{t("Status")}</th>
-              <th>{t("Change")}</th>
-              <th>{t("Delete")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((o) => (
-              <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.customer_name}</td>
-                <td>{o.shipping_address || t("Not provided")}</td>
-                <td>Rs. {o.total_price}</td>
-                <td>{o.status}</td>
-                <td>
-                  <select
-                    value={o.status}
-                    onChange={(e) => updateStatus(o.id, e.target.value)}
-                  >
-                    <option value="Pending">{t("Pending")}</option>
-                    <option value="Processing">{t("Processing")}</option>
-                    <option value="Shipped">{t("Shipped")}</option>
-                    <option value="Delivered">{t("Delivered")}</option>
-                    <option value="Canceled">{t("Canceled")}</option>
-                  </select>
-                </td>
-                <td>
-                  <button
-                    onClick={() => deleteOrder(o.id)}
-                    style={{
-                      background: "#e53935",
-                      color: "#fff",
-                      border: "none",
-                      padding: "6px 10px",
-                      cursor: "pointer",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    {t("Delete")}
-                  </button>
-                </td>
+        <div className="admin-orders-table-wrap">
+          <table className="admin-orders-table">
+            <thead>
+              <tr>
+                <th>{t("Order Number")}</th>
+                <th>{t("Customer")}</th>
+                <th>{t("Address")}</th>
+                <th>{t("Total")}</th>
+                <th>{t("Status")}</th>
+                <th>{t("Change")}</th>
+                <th>{t("Delete")}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.length === 0 ? (
+                <tr>
+                  <td className="admin-orders-empty" colSpan="7">
+                    {t("No orders found.")}
+                  </td>
+                </tr>
+              ) : (
+                orders.map((o) => (
+                  <tr key={o.id}>
+                    <td className="admin-order-number">#{o.id}</td>
+                    <td>{o.customer_name}</td>
+                    <td className="admin-order-address">
+                      {o.shipping_address || t("Not provided")}
+                    </td>
+                    <td className="admin-order-total">Rs. {o.total_price}</td>
+                    <td>
+                      <span
+                        className={`admin-order-status admin-order-status--${String(
+                          o.status || ""
+                        ).toLowerCase()}`}
+                      >
+                        {o.status}
+                      </span>
+                    </td>
+                    <td>
+                      <select
+                        className="admin-order-status-select"
+                        value={o.status}
+                        onChange={(e) => updateStatus(o.id, e.target.value)}
+                      >
+                        <option value="Pending">{t("Pending")}</option>
+                        <option value="Processing">{t("Processing")}</option>
+                        <option value="Shipped">{t("Shipped")}</option>
+                        <option value="Delivered">{t("Delivered")}</option>
+                        <option value="Canceled">{t("Canceled")}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <button
+                        className="admin-order-delete"
+                        onClick={() => deleteOrder(o.id)}
+                      >
+                        {t("Delete")}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
