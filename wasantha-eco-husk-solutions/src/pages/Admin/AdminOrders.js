@@ -1,10 +1,12 @@
 import API_BASE_URL from "../../config/api";
 import React, { useCallback, useEffect, useState } from "react";
 import { usePreferences } from "../../contexts/PreferencesContext";
+import { useToast } from "../../contexts/ToastContext";
 import "../../Styles/AdminStyle/OrderManage.css";
 
 export default function AdminOrders() {
   const { t } = usePreferences();
+  const showToast = useToast();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -72,13 +74,13 @@ export default function AdminOrders() {
       const data = JSON.parse(text);
 
       if (data.success) {
-        alert(t("Order deleted successfully"));
+        showToast(t("Order deleted successfully"));
         fetchOrders();
       } else {
-        alert(data.message || t("Delete failed"));
+        showToast(data.message || t("Delete failed"), "error");
       }
-    } catch (err) {
-      alert(t("Network error"));
+    } catch {
+      showToast(t("Network error"), "error");
     }
   };
 

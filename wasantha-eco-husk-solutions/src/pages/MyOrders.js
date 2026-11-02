@@ -2,10 +2,12 @@ import API_BASE_URL from "../config/api";
 import React, { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { usePreferences } from "../contexts/PreferencesContext";
+import { useToast } from "../contexts/ToastContext";
 import "../Styles/MyOrders.css";
 
 export default function MyOrders() {
   const { t } = usePreferences();
+  const showToast = useToast();
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
   const [orders, setOrders] = useState([]);
   const [message, setMessage] = useState("");
@@ -68,15 +70,15 @@ export default function MyOrders() {
       const text = await res.text();
       const data = JSON.parse(text);
       if (!data.success) {
-        alert(t("Failed to cancel: ") + (data.message || "unknown"));
+        showToast(t("Failed to cancel: ") + (data.message || "unknown"), "error");
       } else {
         // remove from state so it disappears immediately
         setOrders((prev) => prev.filter((o) => o.id !== orderId));
-        alert(t("Order canceled"));
+        showToast(t("Order canceled"));
       }
     } catch (err) {
       console.error("cancelOrder network error:", err);
-      alert(t("Network error while canceling order"));
+      showToast(t("Network error while canceling order"), "error");
     }
   };
 

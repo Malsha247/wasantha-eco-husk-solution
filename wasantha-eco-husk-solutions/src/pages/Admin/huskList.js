@@ -1,10 +1,12 @@
 import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { usePreferences } from "../../contexts/PreferencesContext";
+import { useToast } from "../../contexts/ToastContext";
 import "../../Styles/AdminStyle/adminHusks.css";
 
 export default function AdminHusks() {
   const { t } = usePreferences();
+  const showToast = useToast();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,20 +44,23 @@ export default function AdminHusks() {
   const handleDeleteHusk = async (sellerId) => {
     if (!window.confirm(t("Delete this husk submission permanently?"))) return;
 
-    const res = await fetch(
-      `${API_BASE_URL}/Seller/deleteHusk.php`,
-      {
+    try {
+      const res = await fetch(`${API_BASE_URL}/Seller/deleteHusk.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ seller_id: sellerId }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setItems((prev) => prev.filter((h) => h.id !== sellerId));
+        showToast(t("Husk submission deleted successfully"));
+      } else {
+        showToast(data.message || t("Delete failed"), "error");
       }
-    );
-
-    const data = await res.json();
-    alert(data.message);
-
-    if (data.success) {
-      setItems((prev) => prev.filter((h) => h.id !== sellerId));
+    } catch (err) {
+      console.error("Delete husk submission failed:", err);
+      showToast(t("Delete error"), "error");
     }
   };
 

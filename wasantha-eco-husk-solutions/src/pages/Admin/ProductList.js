@@ -2,6 +2,7 @@ import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePreferences } from "../../contexts/PreferencesContext";
+import { useToast } from "../../contexts/ToastContext";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
@@ -9,6 +10,7 @@ const API_BASE =
 
 export default function ProductList() {
   const { t } = usePreferences();
+  const showToast = useToast();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -43,11 +45,11 @@ export default function ProductList() {
       const data = await res.json();
       if (data.success) {
         fetchProducts();
-        alert(t("Product deleted."));
-      } else alert(data.message || t("Delete failed"));
+        showToast(t("Product deleted."));
+      } else showToast(data.message || t("Delete failed"), "error");
     } catch (e) {
       console.error(e);
-      alert(t("Delete error"));
+      showToast(t("Delete error"), "error");
     }
   };
 

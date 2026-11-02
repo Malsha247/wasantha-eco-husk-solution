@@ -2,10 +2,12 @@ import API_BASE_URL from "../../config/api";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePreferences } from "../../contexts/PreferencesContext";
+import { useToast } from "../../contexts/ToastContext";
 import "../../Styles/AdminStyle/DeliveryPersons.css";
 
 export default function DeliveryPersons() {
   const { t } = usePreferences();
+  const showToast = useToast();
   const navigate = useNavigate();
 
   const [list, setList] = useState([]);
@@ -124,13 +126,13 @@ export default function DeliveryPersons() {
       const data = await res.json();
 
       if (data.success) {
-        setMessage(t("Delivery person deleted successfully"));
         setList((prev) => prev.filter((d) => d.id !== id));
+        showToast(t("Delivery person deleted successfully"));
       } else {
-        alert(data.message || t("Delete failed"));
+        showToast(data.message || t("Delete failed"), "error");
       }
     } catch {
-      alert(t("Server error while deleting"));
+      showToast(t("Server error while deleting"), "error");
     }
   };
 

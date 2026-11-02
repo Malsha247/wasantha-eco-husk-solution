@@ -2,12 +2,14 @@ import API_BASE_URL, { assetUrl } from "../config/api";
 import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { usePreferences } from "../contexts/PreferencesContext";
+import { useToast } from "../contexts/ToastContext";
 import { Trash2 } from "lucide-react";
 import "../Styles/Cart.css";
 import productPlaceholder from "../assests/main.jpg";
 
 export default function Cart() {
   const { t } = usePreferences();
+  const showToast = useToast();
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -103,9 +105,12 @@ export default function Cart() {
         previous.filter((item) => Number(item.id) !== Number(cartId))
       );
       setError("");
+      showToast(t("Item removed from cart."));
     } catch (removeError) {
       console.error("Remove cart item failed:", removeError);
-      setError(removeError.message || t("Could not remove the item."));
+      const message = removeError.message || t("Could not remove the item.");
+      setError(message);
+      showToast(message, "error");
     }
   };
 

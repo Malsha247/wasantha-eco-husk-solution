@@ -3,6 +3,18 @@ import {
   PreferenceControls,
   PreferencesProvider,
 } from "./contexts/PreferencesContext";
+import { ToastProvider, useToast } from "./contexts/ToastContext";
+
+const ToastTestControls = () => {
+  const showToast = useToast();
+
+  return (
+    <>
+      <button onClick={() => showToast("Deleted successfully")}>Success</button>
+      <button onClick={() => showToast("Delete failed", "error")}>Failure</button>
+    </>
+  );
+};
 
 beforeEach(() => {
   window.localStorage.removeItem("wehs-language");
@@ -31,4 +43,20 @@ test("saves language and theme preferences when toggled", () => {
   expect(screen.getByRole("button", { pressed: true })).toBeInTheDocument();
   expect(window.localStorage.getItem("wehs-language")).toBe("si");
   expect(window.localStorage.getItem("wehs-theme")).toBe("dark");
+});
+
+test("shows success and error toast notifications", () => {
+  render(
+    <PreferencesProvider>
+      <ToastProvider>
+        <ToastTestControls />
+      </ToastProvider>
+    </PreferencesProvider>
+  );
+
+  fireEvent.click(screen.getByRole("button", { name: "Success" }));
+  expect(screen.getByRole("status")).toHaveTextContent("Deleted successfully");
+
+  fireEvent.click(screen.getByRole("button", { name: "Failure" }));
+  expect(screen.getByRole("alert")).toHaveTextContent("Delete failed");
 });

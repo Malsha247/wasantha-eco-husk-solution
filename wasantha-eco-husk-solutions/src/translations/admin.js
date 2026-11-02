@@ -95,6 +95,8 @@ const adminTranslations = {
   "Delete failed": "මකා දැමීම අසාර්ථක විය",
   "Delete this husk submission permanently?":
     "මෙම පොල් ලෙලි ඉදිරිපත් කිරීම ස්ථිරවම මකා දමනවාද?",
+  "Husk submission deleted successfully":
+    "පොල් ලෙලි ඉදිරිපත් කිරීම සාර්ථකව මකා දමන ලදී",
   Delivered: "භාර දෙන ලදී",
   "Delivered Orders": "භාර දුන් ඇණවුම්",
   "Delivery Dashboard": "බෙදාහැරීම් පුවරුව",
@@ -207,6 +209,8 @@ const adminTranslations = {
   "Send Response": "ප්‍රතිචාරය යවන්න",
   "Server error": "සේවාදායක දෝෂයකි",
   "Server error while deleting": "මකා දැමීමේදී සේවාදායක දෝෂයකි",
+  "Notifications": "දැනුම්දීම්",
+  "Dismiss notification": "දැනුම්දීම වසන්න",
   Shipped: "යවා ඇත",
   Status: "තත්ත්වය",
   Stock: "තොගය",
