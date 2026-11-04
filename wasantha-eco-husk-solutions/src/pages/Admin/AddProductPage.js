@@ -1,7 +1,8 @@
 import API_BASE_URL from "../../config/api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePreferences } from "../../contexts/PreferencesContext";
+import { ArrowLeft, ImagePlus, PackagePlus } from "lucide-react";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
@@ -17,8 +18,20 @@ export default function AddProductPage() {
     category: "",
   });
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!imageFile) {
+      setImagePreview("");
+      return undefined;
+    }
+
+    const previewUrl = URL.createObjectURL(imageFile);
+    setImagePreview(previewUrl);
+    return () => URL.revokeObjectURL(previewUrl);
+  }, [imageFile]);
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -70,88 +83,136 @@ export default function AddProductPage() {
   };
 
   return (
-    <div className="pm-container">
-      <div className="pm-header">
-        <h2>{t("Add Product")}</h2>
+    <div className="product-form-page">
+      <button
+        className="product-form-back"
+        type="button"
+        onClick={() => navigate("/admin/products")}
+      >
+        <ArrowLeft size={17} aria-hidden="true" />
+        {t("Back to Products")}
+      </button>
+
+      <div className="product-form-heading">
+        <div className="product-form-heading-icon">
+          <PackagePlus size={23} aria-hidden="true" />
+        </div>
+        <div>
+          <h1>{t("Add Product")}</h1>
+          <p>{t("Add a new product to your store inventory.")}</p>
+        </div>
       </div>
 
-      <form className="pm-form" onSubmit={handleSubmit}>
-        <label>
-          {t("Name")}
-          <input
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-          />
-        </label>
+      <form className="product-form-card" onSubmit={handleSubmit}>
+        <div className="product-form-content">
+          <section className="product-form-fields" aria-labelledby="product-info-title">
+            <h2 id="product-info-title">{t("Product information")}</h2>
+            <div className="product-form-grid">
+              <label className="product-form-field">
+                <span>{t("Name")}</span>
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder={t("e.g. Coconut Husk Chips")}
+                  autoComplete="off"
+                  required
+                />
+              </label>
 
-        <label>
-          {t("Description")}
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-          />
-        </label>
+              <label className="product-form-field">
+                <span>{t("Category")}</span>
+                <select
+                  name="category"
+                  value={form.category}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">{t("-- Select Category --")}</option>
+                  <option value="chips">{t("Coconut Husk Chips")}</option>
+                  <option value="By-products">{t("Chips By-Products")}</option>
+                </select>
+              </label>
 
-        <label>
-          {t("Price")}
-          <input
-            name="price"
-            type="number"
-            step="0.01"
-            value={form.price}
-            onChange={handleChange}
-            required
-          />
-        </label>
+              <label className="product-form-field">
+                <span>{t("Price")} (Rs.)</span>
+                <input
+                  name="price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={form.price}
+                  onChange={handleChange}
+                  placeholder={t("e.g. 120")}
+                  required
+                />
+              </label>
 
-        <label>
-          {t("Stock")}
-          <input
-            name="stock"
-            type="number"
-            value={form.stock}
-            onChange={handleChange}
-          />
-        </label>
+              <label className="product-form-field">
+                <span>{t("Stock")}</span>
+                <input
+                  name="stock"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={form.stock}
+                  onChange={handleChange}
+                  placeholder={t("e.g. 25")}
+                />
+              </label>
 
-     
-        <label>
-          {t("Category")}
-          <select
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            required
-          >
-            <option value="">{t("-- Select Category --")}</option>
-            <option value="chips">{t("Coconut Husk Chips")}</option>
-            <option value="By-products">{t("Chips By-Products")}</option>
-          </select>
-        </label>
+              <label className="product-form-field product-form-field-wide">
+                <span>{t("Description")}</span>
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  rows="4"
+                  placeholder={t("Describe the product and its uses")}
+                />
+              </label>
+            </div>
+          </section>
 
-        <label>
-          {t("Image (optional)")}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImageFile(e.target.files[0])}
-          />
-        </label>
+          <aside className="product-image-panel">
+            <h2>{t("Product image")}</h2>
+            <p>{t("A clear product photo helps customers recognize the item.")}</p>
+            <div className="product-image-preview">
+              {imagePreview ? (
+                <img src={imagePreview} alt={t("Product preview")} />
+              ) : (
+                <div className="product-image-empty">
+                  <ImagePlus size={30} aria-hidden="true" />
+                  <span>{t("No image selected")}</span>
+                </div>
+              )}
+            </div>
+            <input
+              className="product-image-input"
+              id="product-image"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+            />
+            <label className="product-image-upload" htmlFor="product-image">
+              <ImagePlus size={17} aria-hidden="true" />
+              {imageFile ? t("Change image") : t("Choose image")}
+            </label>
+            <span className="product-image-hint">{t("Image (optional)")}</span>
+          </aside>
+        </div>
 
-        <div style={{ marginTop: 12 }}>
-          <button className="pm-btn" type="submit" disabled={loading}>
-            {loading ? t("Saving...") : t("Save Product")}
-          </button>
+        <div className="product-form-actions">
           <button
-            className="pm-btn"
+            className="product-form-cancel"
             type="button"
             onClick={() => navigate("/admin/products")}
-            style={{ marginLeft: 8 }}
           >
             {t("Cancel")}
+          </button>
+          <button className="product-form-submit" type="submit" disabled={loading}>
+            <PackagePlus size={17} aria-hidden="true" />
+            {loading ? t("Saving...") : t("Save Product")}
           </button>
         </div>
       </form>

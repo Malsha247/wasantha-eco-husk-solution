@@ -6,6 +6,8 @@ const adminTranslations = {
   "Add Daily Husk Cutting": "දෛනික පොල් ලෙලි කැපීම එක් කරන්න",
   "Add failed": "එක් කිරීම අසාර්ථක විය",
   "Add Product": "නිෂ්පාදනය එක් කරන්න",
+  "Add a new product to your store inventory.":
+    "ඔබගේ වෙළඳසැලේ තොගයට නව නිෂ්පාදනයක් එක් කරන්න.",
   Address: "ලිපිනය",
   "Admin Dashboard": "පරිපාලක පුවරුව",
   "Overview": "දළ විශ්ලේෂණය",
@@ -125,6 +127,14 @@ const adminTranslations = {
   "Husk Production Report": "පොල් ලෙලි නිෂ්පාදන වාර්තාව",
   ID: "හැඳුනුම් අංකය",
   "Image (optional)": "රූපය (අත්‍යවශ්‍ය නොවේ)",
+  "A clear product photo helps customers recognize the item.":
+    "පැහැදිලි නිෂ්පාදන ඡායාරූපයක් පාරිභෝගිකයන්ට භාණ්ඩය හඳුනා ගැනීමට උපකාරී වේ.",
+  "Back to Products": "නිෂ්පාදන වෙත ආපසු",
+  "Change image": "රූපය වෙනස් කරන්න",
+  "Choose image": "රූපයක් තෝරන්න",
+  "Describe the product and its uses": "නිෂ්පාදනය සහ එහි භාවිතයන් විස්තර කරන්න",
+  "e.g. 25": "උදා. 25",
+  "e.g. Coconut Husk Chips": "උදා. පොල් ලෙලි කැබලි",
   "Image upload failed": "රූපය උඩුගත කිරීම අසාර්ථක විය",
   Images: "රූප",
   "Invalid JSON response from server":
@@ -149,6 +159,7 @@ const adminTranslations = {
   "No entries.": "ඇතුළත් කිරීම් නොමැත.",
   "No feedbacks.": "ප්‍රතිචාර නොමැත.",
   "No image": "රූපයක් නොමැත",
+  "No image selected": "රූපයක් තෝරා නැත",
   "No production data available": "නිෂ්පාදන දත්ත නොමැත",
   "No products found.": "නිෂ්පාදන හමු නොවීය.",
   "No response": "ප්‍රතිචාරයක් නොමැත",
@@ -178,6 +189,9 @@ const adminTranslations = {
   Processing: "සකසමින්",
   Product: "නිෂ්පාදනය",
   "Product added": "නිෂ්පාදනය එක් කරන ලදී",
+  "Product image": "නිෂ්පාදන රූපය",
+  "Product information": "නිෂ්පාදන තොරතුරු",
+  "Product preview": "නිෂ්පාදන පෙරදසුන",
   "Product deleted.": "නිෂ්පාදනය මකා දමන ලදී.",
   "Product inventory, low-stock alerts and stock history.":
     "නිෂ්පාදන තොගය, අඩු තොග දැනුම්දීම් සහ තොග ඉතිහාසය.",
