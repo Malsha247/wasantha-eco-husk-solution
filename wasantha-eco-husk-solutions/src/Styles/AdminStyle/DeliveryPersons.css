@@ -1,189 +1,303 @@
-/* ===== Page Wrapper ===== */
-.delivery-wrapper {
-  max-width: 900px;
-  margin: auto;
-  padding: 30px;
-  background: #f9fbe7;
-  border-radius: 12px;
+.delivery-persons {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  color: var(--admin-text, #1d3124);
+  font-family: "Poppins", sans-serif;
 }
 
-/* ===== Page Title ===== */
-.delivery-wrapper h2 {
-  font-size: 26px;
+.delivery-persons-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--admin-muted, #728176);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delivery-persons-back:hover {
+  color: var(--admin-green, #287844);
+}
+
+.delivery-persons-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0 24px;
+}
+
+.delivery-persons-heading-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 15px;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-green, #287844);
+}
+
+.delivery-persons-heading h1 {
+  margin: 0;
+  color: var(--admin-text, #1d3124);
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  letter-spacing: -0.035em;
+}
+
+.delivery-persons-heading p,
+.delivery-persons-form-heading p {
+  margin: 5px 0 0;
+  color: var(--admin-muted, #728176);
+  font-size: 0.88rem;
+}
+
+.delivery-persons-message {
+  margin: 0 0 18px;
+  padding: 11px 14px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 10px;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-text, #1d3124);
+  font-size: 0.84rem;
+}
+
+.delivery-persons-form {
+  overflow: hidden;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 18px;
+  background: var(--admin-surface, #fff);
+  box-shadow: 0 12px 32px rgba(27, 67, 39, 0.07);
+}
+
+.delivery-persons-form-heading {
+  padding: 24px clamp(20px, 3.2vw, 34px) 0;
+}
+
+.delivery-persons-form-heading h2,
+.delivery-persons-list-heading h2 {
+  margin: 0;
+  color: var(--admin-text, #1d3124);
+  font-size: 1rem;
   font-weight: 700;
-  color: #1b5e20;
-  margin-bottom: 20px;
+}
+
+.delivery-persons-form-heading p {
+  font-size: 0.8rem;
+}
+
+.delivery-persons-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 19px 16px;
+  padding: 22px clamp(20px, 3.2vw, 34px) 28px;
+}
+
+.delivery-persons-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--admin-text, #1d3124);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.delivery-persons-field input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 43px;
+  padding: 10px 12px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 10px;
+  outline: none;
+  background: var(--admin-surface-soft, #f7faf6);
+  color: var(--admin-text, #1d3124);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.delivery-persons-field input:focus {
+  border-color: var(--admin-green, #287844);
+  box-shadow: 0 0 0 3px rgba(55, 139, 77, 0.12);
+}
+
+.delivery-persons-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 17px clamp(20px, 3.2vw, 34px);
+  border-top: 1px solid var(--admin-border, #e2ebe1);
+  background: var(--admin-surface-soft, #f7faf6);
+}
+
+.delivery-persons-submit,
+.delivery-person-pay,
+.delivery-person-delete {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 0.81rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.delivery-persons-submit {
+  min-height: 42px;
+  border-color: var(--admin-green, #287844);
+  background: var(--admin-green, #287844);
+  color: #fff;
+}
+
+.delivery-persons-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(0.96);
+}
+
+.delivery-persons-submit:disabled,
+.delivery-person-pay:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.delivery-persons-list {
+  margin-top: 32px;
+}
+
+.delivery-persons-list-heading {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 15px;
 }
 
-/* ===== Form Card ===== */
-.delivery-form {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+.delivery-persons-list-heading h2 {
+  font-size: 1.08rem;
+}
+
+.delivery-persons-list-heading > span {
   display: grid;
-  gap: 12px;
-  max-width: 450px;
+  min-width: 25px;
+  height: 25px;
+  place-items: center;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--admin-surface-soft, #f7faf6);
+  color: var(--admin-muted, #728176);
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
-/* ===== Inputs ===== */
-.delivery-form input {
-  padding: 12px;
-  border: 1px solid #c8e6c9;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: 0.2s ease;
+.delivery-persons-empty {
+  padding: 24px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 14px;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-muted, #728176);
+  text-align: center;
 }
 
-.delivery-form input:focus {
-  outline: none;
-  border-color: #2e7d32;
-  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.15);
-}
-
-/* ===== Button ===== */
-.delivery-form button {
-  margin-top: 10px;
-  padding: 12px;
-  background: linear-gradient(135deg, #2e7d32, #1b5e20);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.delivery-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(46, 125, 50, 0.4);
-}
-
-/* ===== Success Message ===== */
-.msg {
-  margin-top: 10px;
-  padding: 10px;
-  background: #e8f5e9;
-  color: #2e7d32;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-/* ===== Section Divider ===== */
-.delivery-divider {
-  margin: 30px 0 15px;
-  border-top: 2px solid #c8e6c9;
-}
-
-/* ===== List Container ===== */
-.delivery-list {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  padding: 15px 20px;
-}
-
-/* ===== Row Item ===== */
-.delivery-row {
+.delivery-persons-grid {
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 14px;
 }
 
-.delivery-row:last-child {
-  border-bottom: none;
+.delivery-person-card {
+  display: grid;
+  gap: 17px;
+  padding: 18px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 14px;
+  background: var(--admin-surface, #fff);
+  box-shadow: 0 6px 18px rgba(20, 54, 29, 0.05);
 }
 
-/* ===== Name ===== */
-.delivery-row strong {
-  color: #1b5e20;
-  font-size: 15px;
-}
-
-/* ===== Email ===== */
-.delivery-row span {
-  font-size: 14px;
-  color: #555;
-}
-
-/* ===== Delivery Count Badge ===== */
-.delivery-count {
-  justify-self: end;
-  background: #e8f5e9;
-  color: #2e7d32;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
+.delivery-person-details,
+.delivery-person-stats {
+  display: grid;
   gap: 6px;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .delivery-row {
-    grid-template-columns: 1fr;
-    gap: 6px;
+.delivery-person-details strong {
+  color: var(--admin-text, #1d3124);
+  font-size: 0.95rem;
+}
+
+.delivery-person-details span,
+.delivery-person-stats {
+  color: var(--admin-muted, #728176);
+  font-size: 0.8rem;
+}
+
+.delivery-person-stats strong {
+  color: var(--admin-text, #1d3124);
+}
+
+.delivery-person-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.delivery-person-pay {
+  background: var(--admin-green, #287844);
+  color: #fff;
+}
+
+.delivery-person-pay:hover:not(:disabled) {
+  background: var(--admin-green-strong, #17542e);
+}
+
+.delivery-person-delete {
+  background: #b33a32;
+  color: #fff;
+}
+
+.delivery-person-delete:hover {
+  background: #922c26;
+}
+
+.delivery-persons-back:focus-visible,
+.delivery-persons-submit:focus-visible,
+.delivery-person-pay:focus-visible,
+.delivery-person-delete:focus-visible {
+  outline: 2px solid var(--admin-green, #287844);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .delivery-persons-heading {
+    align-items: flex-start;
   }
 
-  .delivery-count {
-    justify-self: start;
+  .delivery-persons-heading-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
   }
-}
-.pay-btn {
-  margin-top: 6px;
-  padding: 6px 12px;
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
 
-.pay-btn:disabled {
-  background: #aaa;
-  cursor: not-allowed;
-}
-.delivery-page {
-  padding: 30px;
-  background: #f7fbe8;
-}
+  .delivery-persons-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.salary-box {
-  background: #eaf4ff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-}
+  .delivery-persons-form-actions {
+    justify-content: stretch;
+  }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th {
-  background: #2e7d32;
-  color: white;
-}
-
-td, th {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-button {
-  background: #2e7d32;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
+  .delivery-persons-submit {
+    width: 100%;
+  }
 }
