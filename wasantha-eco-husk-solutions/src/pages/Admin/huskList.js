@@ -64,15 +64,19 @@ export default function AdminHusks() {
     }
   };
 
-  if (loading) return <p>{t("Loading...")}</p>;
+  if (loading) {
+    return (
+      <div className="admin-husks">
+        <p className="admin-husks-message">{t("Loading...")}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="admin-husks-page">
+    <div className="admin-husks">
       <h2>{t("All Husk Submissions")}</h2>
 
-      {items.length === 0 ? (
-        <p>{t("No entries.")}</p>
-      ) : (
+      <div className="admin-husks-table-wrap">
         <table className="admin-husks-table">
           <thead>
             <tr>
@@ -88,68 +92,73 @@ export default function AdminHusks() {
           </thead>
 
           <tbody>
-            {items.map((h) => (
-              <tr key={h.id}>
-                <td>{h.name}</td>
-                <td>{h.phone}</td>
-                <td>{h.address}</td>
-
-                <td>
-                  {h.image_1 && (
-                    <img
-                      src={assetUrl(h.image_1)}
-                      alt=""
-                      width="70"
-                    />
-                  )}
-                  {h.image_2 && (
-                    <img
-                      src={assetUrl(h.image_2)}
-                      alt=""
-                      width="70"
-                      style={{ marginLeft: 5 }}
-                    />
-                  )}
-                </td>
-
-                <td>{h.description}</td>
-
-                <td>{h.admin_response || t("No response")}</td>
-
-                <td>
-                  {h.map_link ? (
-                    <a href={h.map_link} target="_blank" rel="noreferrer">
-                      {t("View Map")}
-                    </a>
-                  ) : (
-                    t("Not set")
-                  )}
-                </td>
-
-                <td>
-                  <button onClick={() => handleResponse(h.id)}>
-                    {t("Send Response")}
-                  </button>
-
-                  
-                  {h.admin_response && (
-                    <button
-                      onClick={() => handleDeleteHusk(h.id)}
-                      style={{
-                        marginLeft: 6,
-                        background: "#d9534f",
-                        color: "#fff",
-                      }}
-                    >
-                      {t("Delete")}
-                    </button>
-                  )}
+            {items.length === 0 ? (
+              <tr>
+                <td className="admin-husks-empty" colSpan="8">
+                  {t("No entries.")}
                 </td>
               </tr>
-            ))}
+            ) : (
+              items.map((h) => (
+                <tr key={h.id}>
+                  <td className="admin-husks-owner">{h.name}</td>
+                  <td className="admin-husks-phone">{h.phone}</td>
+                  <td className="admin-husks-address">{h.address}</td>
+
+                  <td>
+                    <div className="admin-husks-images">
+                      {h.image_1 && (
+                        <img src={assetUrl(h.image_1)} alt={h.name || ""} />
+                      )}
+                      {h.image_2 && (
+                        <img src={assetUrl(h.image_2)} alt={h.name || ""} />
+                      )}
+                    </div>
+                  </td>
+
+                  <td className="admin-husks-description">{h.description}</td>
+
+                  <td>{h.admin_response || t("No response")}</td>
+
+                  <td>
+                    {h.map_link ? (
+                      <a
+                        className="admin-husks-map-link"
+                        href={h.map_link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {t("View Map")}
+                      </a>
+                    ) : (
+                      t("Not set")
+                    )}
+                  </td>
+
+                  <td>
+                    <div className="admin-husks-actions">
+                      <button
+                        className="admin-husks-respond"
+                        onClick={() => handleResponse(h.id)}
+                      >
+                        {t("Send Response")}
+                      </button>
+                      {h.admin_response && (
+                        <button
+                          className="admin-husks-delete"
+                          onClick={() => handleDeleteHusk(h.id)}
+                        >
+                          {t("Delete")}
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      )}
+      </div>
     </div>
   );
 }
