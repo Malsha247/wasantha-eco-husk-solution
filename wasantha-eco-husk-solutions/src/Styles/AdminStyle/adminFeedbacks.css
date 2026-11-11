@@ -1,43 +1,278 @@
 
-.admin-feedbacks-page {
-  max-width: 1100px;
-  margin: 20px auto;
-  padding: 16px;
+.admin-feedbacks {
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--admin-text, #1d3124);
 }
-.feedback-card {
-  border: 1px solid #eee;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  background: #fff;
-}
-.fb-header {
+
+.admin-feedbacks-heading {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 6px;
-  font-size: 13px;
-  color: #333;
+  gap: 24px;
+  margin-bottom: 24px;
 }
-.fb-subject {
+
+.admin-feedbacks-heading h2 {
+  margin: 0;
+  color: var(--admin-green-strong, #17542e);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.admin-feedbacks-heading p {
+  margin: 7px 0 0;
+  color: var(--admin-muted, #728176);
+  font-size: 0.88rem;
+}
+
+.admin-feedbacks-summary {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 12px;
+}
+
+.admin-feedbacks-stat {
+  display: grid;
+  min-width: 142px;
+  gap: 5px;
+  padding: 12px 16px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 12px;
+  background: var(--admin-surface, #fff);
+  box-shadow: 0 4px 14px rgba(20, 54, 29, 0.04);
+}
+
+.admin-feedbacks-stat span {
+  color: var(--admin-muted, #728176);
+  font-size: 0.73rem;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: #1b4d1b;
 }
-.fb-message {
-  margin-bottom: 8px;
+
+.admin-feedbacks-stat strong {
+  color: var(--admin-text, #1d3124);
+  font-size: 1.2rem;
 }
-.fb-reply-form textarea {
+
+.admin-feedbacks-stat--pending strong {
+  color: var(--admin-green, #287844);
+}
+
+.admin-feedbacks-state {
+  margin: 0;
+  padding: 28px 20px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 14px;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-muted, #728176);
+  text-align: center;
+}
+
+.admin-feedbacks-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-feedback-card {
+  overflow: hidden;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 14px;
+  background: var(--admin-surface, #fff);
+  box-shadow: 0 6px 18px rgba(20, 54, 29, 0.06);
+}
+
+.admin-feedback-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--admin-border, #e2ebe1);
+  background: var(--admin-surface-soft, #f7faf6);
+}
+
+.admin-feedback-customer,
+.admin-feedback-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.admin-feedback-customer strong {
+  color: var(--admin-text, #1d3124);
+  font-size: 0.9rem;
+}
+
+.admin-feedback-customer a,
+.admin-feedback-meta time {
+  color: var(--admin-muted, #728176);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.admin-feedback-customer a:hover {
+  color: var(--admin-green, #287844);
+  text-decoration: underline;
+}
+
+.admin-feedback-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-feedback-status--replied {
+  background: #e4f4e7;
+  color: #287844;
+}
+
+.admin-feedback-status--pending {
+  background: #fff3d6;
+  color: #966300;
+}
+
+.admin-feedback-content {
+  padding: 18px 20px;
+}
+
+.admin-feedback-content h3 {
+  margin: 0 0 8px;
+  color: var(--admin-green-strong, #17542e);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.admin-feedback-content p,
+.admin-feedback-reply p {
+  margin: 0;
+  color: var(--admin-text, #1d3124);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.admin-feedback-reply {
+  margin: 0 20px 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-left: 3px solid var(--admin-green, #287844);
+  border-radius: 10px;
+  background: var(--admin-surface-soft, #f7faf6);
+}
+
+.admin-feedback-reply strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--admin-green-strong, #17542e);
+  font-size: 0.78rem;
+}
+
+.admin-feedback-reply-form {
+  display: grid;
+  justify-items: start;
+  gap: 9px;
+  margin: 0 20px 20px;
+}
+
+.admin-feedback-reply-form label {
+  color: var(--admin-muted, #728176);
+  font-size: 0.77rem;
+  font-weight: 600;
+}
+
+.admin-feedback-reply-form textarea {
   width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+  min-height: 92px;
+  resize: vertical;
+  padding: 11px 12px;
+  border: 1px solid var(--admin-border, #e2ebe1);
+  border-radius: 9px;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-text, #1d3124);
+  font: inherit;
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
-.fb-reply-form button {
-  margin-top: 8px;
-  background: #2b7a0b;
+
+.admin-feedback-reply-form textarea::placeholder {
+  color: var(--admin-muted, #728176);
+  opacity: 0.8;
+}
+
+.admin-feedback-reply-form textarea:focus {
+  border-color: var(--admin-green, #287844);
+  outline: 2px solid rgba(40, 120, 68, 0.16);
+}
+
+.admin-feedback-reply-form button {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--admin-green, #287844);
   color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.16s ease;
+}
+
+.admin-feedback-reply-form button:hover {
+  background: var(--admin-green-strong, #17542e);
+}
+
+.admin-feedback-reply-form button:focus-visible {
+  outline: 2px solid var(--admin-green, #287844);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .admin-feedbacks-heading {
+    flex-direction: column;
+  }
+
+  .admin-feedbacks-summary {
+    width: 100%;
+  }
+
+  .admin-feedbacks-stat {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .admin-feedback-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-feedback-meta {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-feedbacks-heading h2 {
+    font-size: 1.25rem;
+  }
+
+  .admin-feedback-card-header {
+    padding: 14px 15px;
+  }
+
+  .admin-feedback-content {
+    padding: 16px 15px;
+  }
+
+  .admin-feedback-reply,
+  .admin-feedback-reply-form {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
 }

@@ -107,47 +107,91 @@ export default function AdminFeedbacks() {
     }
   };
 
-  if (loading) return <p>{t("Loading...")}</p>;
+  const awaitingReplyCount = list.filter((feedback) => !feedback.is_replied).length;
 
   return (
-    <div className="admin-feedbacks-page">
-      <h2>{t("Feedback & Inquiries")}</h2>
-      {list.length === 0 ? (
-        <p>{t("No feedbacks.")}</p>
+    <main className="admin-feedbacks">
+      <header className="admin-feedbacks-heading">
+        <div>
+          <h2>{t("Feedback & Inquiries")}</h2>
+          <p>{t("Review customer messages and send a reply.")}</p>
+        </div>
+        <div className="admin-feedbacks-summary" aria-label={t("Feedback summary")}>
+          <div className="admin-feedbacks-stat">
+            <span>{t("Total messages")}</span>
+            <strong>{loading ? "—" : list.length}</strong>
+          </div>
+          <div className="admin-feedbacks-stat admin-feedbacks-stat--pending">
+            <span>{t("Awaiting reply")}</span>
+            <strong>{loading ? "—" : awaitingReplyCount}</strong>
+          </div>
+        </div>
+      </header>
+
+      {loading ? (
+        <p className="admin-feedbacks-state">{t("Loading...")}</p>
+      ) : list.length === 0 ? (
+        <p className="admin-feedbacks-state">{t("No feedbacks.")}</p>
       ) : (
-        <div className="feedbacks-list">
+        <section className="admin-feedbacks-list" aria-label={t("Feedback & Inquiries")}>
           {list.map((f) => (
-            <div key={f.id} className="feedback-card">
-              <div className="fb-header">
-                <div>
-                  <strong>{f.user_name}</strong> — {f.user_email}
+            <article key={f.id} className="admin-feedback-card">
+              <div className="admin-feedback-card-header">
+                <div className="admin-feedback-customer">
+                  <strong>{f.user_name}</strong>
+                  <a href={`mailto:${f.user_email}`}>{f.user_email}</a>
                 </div>
-                <div>{new Date(f.created_at).toLocaleString()}</div>
+                <div className="admin-feedback-meta">
+                  <time dateTime={f.created_at}>
+                    {new Date(f.created_at).toLocaleString()}
+                  </time>
+                  <span
+                    className={`admin-feedback-status ${
+                      f.is_replied
+                        ? "admin-feedback-status--replied"
+                        : "admin-feedback-status--pending"
+                    }`}
+                  >
+                    {t(f.is_replied ? "Replied" : "Awaiting reply")}
+                  </span>
+                </div>
               </div>
-              <div className="fb-subject">{f.subject}</div>
-              <div className="fb-message">{f.message}</div>
+
+              <div className="admin-feedback-content">
+                <h3>{f.subject}</h3>
+                <p>{f.message}</p>
+              </div>
 
               {f.is_replied ? (
-                <div className="fb-reply">
-                  <strong>{t("Replied by")} {f.replied_by}:</strong>
-                  <div>{f.reply}</div>
+                <div className="admin-feedback-reply">
+                  <strong>
+                    {t("Replied by")} {f.replied_by}:
+                  </strong>
+                  <p>{f.reply}</p>
                 </div>
               ) : (
-                <div className="fb-reply-form">
+                <div className="admin-feedback-reply-form">
+                  <label htmlFor={`feedback-reply-${f.id}`}>
+                    {t("Write your reply")}
+                  </label>
                   <textarea
+                    id={`feedback-reply-${f.id}`}
                     rows="3"
                     value={replyText[f.id] || ""}
+                    placeholder={t("Write your reply")}
                     onChange={(e) =>
                       setReplyText({ ...replyText, [f.id]: e.target.value })
                     }
                   />
-                  <button onClick={() => sendReply(f.id)}>{t("Send Reply")}</button>
+                  <button type="button" onClick={() => sendReply(f.id)}>
+                    {t("Send Reply")}
+                  </button>
                 </div>
               )}
-            </div>
+            </article>
           ))}
-        </div>
+        </section>
       )}
-    </div>
+    </main>
   );
 }
