@@ -1,5 +1,5 @@
 import API_BASE_URL from "../config/api";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { usePreferences } from "../contexts/PreferencesContext";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
@@ -23,6 +23,7 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const submitting = useRef(false);
 
   const navigate = useNavigate();
 
@@ -60,18 +61,30 @@ function Register() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submitting.current || submitted) return;
+
     const validationErrors = validate();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) return;
 
+    submitting.current = true;
     setLoading(true);
+    setApiError("");
+    const controller = new AbortController();
+    let requestTimedOut = false;
+    const timeoutId = setTimeout(() => {
+      requestTimedOut = true;
+      controller.abort();
+    }, 45000);
+
     try {
       const res = await fetch(
         `${API_BASE_URL}/register.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
           body: JSON.stringify({
             firstName: formData.firstName.trim(),
             lastName: formData.lastName.trim(),
@@ -99,8 +112,14 @@ function Register() {
       }
     } catch (err) {
       console.error("Register error:", err);
-      setApiError(t("Something went wrong. Please try again later."));
+      setApiError(
+        requestTimedOut
+          ? t("Registration is taking too long. Check whether your account was created, then try logging in.")
+          : t("Could not connect to the registration server. Please try again.")
+      );
     } finally {
+      clearTimeout(timeoutId);
+      submitting.current = false;
       setLoading(false);
     }
   };
@@ -211,7 +230,7 @@ function Register() {
             <small className="error">{errors.confirmPassword}</small>
           )}
 
-          <button type="submit" className="btn-register" disabled={loading}>
+          <button type="submit" className="btn-register" disabled={loading || submitted}>
             {loading ? t("Registering...") : t("Register")}
           </button>
         </form>

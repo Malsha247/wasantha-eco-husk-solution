@@ -244,6 +244,8 @@ const publicTranslations = {
   "Refresh": "නැවුම් කරන්න",
   "Register": "ලියාපදිංචි වන්න",
   "Registering...": "ලියාපදිංචි වෙමින්...",
+  "Registration is taking too long. Check whether your account was created, then try logging in.": "ලියාපදිංචියට වැඩි වේලාවක් ගත වේ. ඔබගේ ගිණුම සෑදී ඇත්දැයි පරීක්ෂා කර, පසුව පිවිසීමට උත්සාහ කරන්න.",
+  "Could not connect to the registration server. Please try again.": "ලියාපදිංචි සේවාදායකයට සම්බන්ධ විය නොහැකි විය. කරුණාකර නැවත උත්සාහ කරන්න.",
   "Registration failed. Try again.": "ලියාපදිංචිය අසාර්ථකයි. නැවත උත්සාහ කරන්න.",
   "Registration successful! Welcome email sent. Redirecting...": "ලියාපදිංචිය සාර්ථකයි! පිළිගැනීමේ ඊමේල් පණිවිඩය යවා ඇත. යොමු කරමින්...",
   "Registration successful, but we could not send the welcome email. Redirecting...": "ලියාපදිංචිය සාර්ථකයි, නමුත් පිළිගැනීමේ ඊමේල් පණිවිඩය යැවිය නොහැකි විය. යොමු කරමින්...",

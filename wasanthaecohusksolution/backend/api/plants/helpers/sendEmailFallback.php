@@ -48,12 +48,12 @@ function send_email_fallback(
             $mail->isSMTP();
             $mail->Host = $smtpHost;
             $mail->SMTPAuth = true;
+            $mail->Timeout = 10;
             $mail->Username = getenv('SMTP_USERNAME') ?: 'wasanthaeco2001@gmail.com';
             $mail->Password = $smtpPassword;
             $mail->SMTPSecure = getenv('SMTP_ENCRYPTION')
                 ?: \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = (int) (getenv('SMTP_PORT') ?: 587);
-            $mail->Timeout = 15;
             $mail->CharSet = 'UTF-8';
             $mail->setFrom($from, $fromName);
 
@@ -69,7 +69,7 @@ function send_email_fallback(
             $mail->send();
 
             return true;
-        } catch (\PHPMailer\PHPMailer\Exception $e) {
+        } catch (\Throwable $e) {
             error_log('SMTP email delivery failed: ' . $e->getMessage());
             return 'SMTP email delivery failed.';
         }
